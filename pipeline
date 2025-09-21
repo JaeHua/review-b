@@ -1,0 +1,7 @@
+ submodule 实现
+ $ git init
+ $ git submodule add git@github.com:JaeHua/reviewapis.git ./api
+创建代码
+ $make api
+$ kratos proto server api/business/v1/business.proto -t internal/service
+$ make validate
