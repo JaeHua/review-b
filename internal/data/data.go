@@ -55,7 +55,6 @@ func NewDicovery(conf *conf.Registry) registry.Discovery {
 }
 
 func NewReviewServiceClient(d registry.Discovery) v1.ReviewClient {
-	// TODO 创建 review-service 的 RPC 客户端
 	conn, err := grpc.DialInsecure(
 		context.Background(),
 		//grpc.WithEndpoint("127.0.0.1:9002"),
