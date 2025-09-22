@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/go-kratos/kratos/v2/middleware/logging"
+	"github.com/go-kratos/kratos/v2/middleware/validate"
 	v1 "review-b/api/business/v1"
 	"review-b/internal/conf"
 	"review-b/internal/service"
@@ -16,6 +17,7 @@ func NewHTTPServer(c *conf.Server, business *service.BusinessService, logger log
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
+			validate.Validator(),
 			logging.Server(logger),
 		),
 	}

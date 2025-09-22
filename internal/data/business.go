@@ -39,3 +39,22 @@ func (r *businessRepo) Reply(ctx context.Context, param *biz.ReplyParam) (int64,
 	}
 	return ret.ReplyID, nil
 }
+
+func (r *businessRepo) AppealReview(ctx context.Context, param *biz.AppealParam) (int64, error) {
+	r.log.WithContext(ctx).Infof("[data] AppealReview param(%+v)", param)
+	// 之前都是写数据库
+	// 现在需要通过 RPC 调用 review-service 服务的接口
+	ret, err := r.data.rc.AppealReview(ctx, &v1.AppealReviewRequest{
+		ReviewID:  param.ReviewID,
+		Reason:    param.Reason,
+		StoreID:   param.StoreID,
+		Content:   param.Content,
+		PicInfo:   param.PicInfo,
+		VideoInfo: param.VideoInfo,
+	})
+	if err != nil {
+		r.log.WithContext(ctx).Errorf("[data] AppealReview call review-service AppealReview error(%v)", err)
+		return 0, err
+	}
+	return ret.AppealID, nil
+}
